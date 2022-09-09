@@ -1,41 +1,94 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/modules/login/sign_in.dart';
+import 'package:shop_app/modules/login/sign_up.dart';
+import 'package:shop_app/shared/components/components.dart';
 
 class LoginScreen extends StatelessWidget {
-  LoginScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Title',
-        ),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: TextButton(
-          child: const Text(
-            'click',
+      body: Stack(
+        children: [
+          Image(
+            height: double.infinity,
+            width: double.infinity,
+            fit: BoxFit.cover,
+            image: AssetImage(
+              'assets/images/blueBackground.png',
+            ),
           ),
-          onPressed: () {
-            print('object');
-            showModalBottomSheet(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50.0),
-              ),
-              context: context,
-              builder: (context) => Container(
-                height: 400,
-                decoration: const BoxDecoration(
-                  color: Colors.red,
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(20),
-                    topLeft: Radius.circular(20),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  const SizedBox(
+                    height: 20.0,
                   ),
-                ),
+                  Expanded(
+                    child: logoText(),
+                  ),
+                  const SizedBox(
+                    height: 50.0,
+                  ),
+                  Container(
+                    height: 50.0,
+                    width: double.maxFinite,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                    ),
+                    child: MaterialButton(
+                      onPressed: () {
+                        navigateTo(
+                          context,
+                          SignUpScreen(),
+                        );
+                      },
+                      child: Text(
+                        'Sign Up',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          color: Colors.blue[800],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'already have an account?',
+                        style: TextStyle(color: Colors.white.withOpacity(0.6)),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          navigateTo(
+                            context,
+                            SignInScreen(),
+                          );
+                        },
+                        child: const Text(
+                          'Sign in',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  )
+                ],
               ),
-            );
-          },
-        ),
+            ),
+          ),
+        ],
       ),
     );
   }

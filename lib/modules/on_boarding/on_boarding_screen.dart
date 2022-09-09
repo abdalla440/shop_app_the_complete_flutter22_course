@@ -20,15 +20,15 @@ class OnBoardingScreen extends StatefulWidget {
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
   List<BoardingModel> models = [
     BoardingModel(
-        imagePath: 'assets/images/img1.png',
+        imagePath: 'assets/images/img1blue.png',
         title: 'All you Need',
         body: 'fined every thing that you need in one place'),
     BoardingModel(
-        imagePath: 'assets/images/img2.png',
+        imagePath: 'assets/images/img2blue.png',
         title: 'All way to you',
         body: 'buy nay thing and every thing because delivery is not a problem anymore'),
     BoardingModel(
-        imagePath: 'assets/images/img3.png',
+        imagePath: 'assets/images/img3blue.png',
         title: 'Paying methods',
         body: "pay using credit card or cash it's up to you"),
   ];
@@ -46,7 +46,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           TextButton(
               onPressed: () => replaceTo(
                 context,
-                const LoginScreen(),
+                 LoginScreen(),
               ),
               child: Text(
                 'SKIP',
@@ -102,7 +102,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     if (_isLastPage == true) {
                       replaceTo(
                         context,
-                        const LoginScreen(),
+                         LoginScreen(),
                       );
                     } else {
                       _boardingController.nextPage(
