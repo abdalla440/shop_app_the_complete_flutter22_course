@@ -8,25 +8,23 @@ class CashHelper {
     sharedPreferences = await SharedPreferences.getInstance();
   }
 
-  static Future<bool> putBool({
-    required String key,
-    required bool value,
-  }) async {
-    // set key value pair in the memory to save the bool value
-    return await sharedPreferences!.setBool(key, value);
-  }
-  static bool? getBool({required String key}) {
-    return sharedPreferences!.getBool(key);
-  }
-  static Future<bool> putString({
-    required String key,
-    required String value,
-  }) async {
-    // set key value pair in the memory to save the bool value
-    return await sharedPreferences!.setString(key, value);
+  static dynamic getData({required String key}) {
+    return sharedPreferences!.get(key);
   }
 
-  static String? getString({required String key}) {
-    return sharedPreferences!.getString(key);
+  static Future<bool> putData({
+    required String key,
+    required dynamic value,
+  }) async {
+    if (value is String) return await sharedPreferences!.setString(key, value);
+    if (value is int) return await sharedPreferences!.setInt(key, value);
+    if (value is bool) return await sharedPreferences!.setBool(key, value);
+    return await sharedPreferences!.setDouble(key, value);
+  }
+
+  static Future<bool> clearData({
+    required String key,
+  }) async {
+    return await sharedPreferences!.remove(key);
   }
 }

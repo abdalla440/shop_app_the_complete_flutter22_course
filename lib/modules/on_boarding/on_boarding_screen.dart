@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/modules/login/login.dart';
 import 'package:shop_app/shared/components/components.dart';
+import 'package:shop_app/shared/network/local/cash_helper.dart';
 import 'package:shop_app/shared/styles/colors.dart';
 import 'package:shop_app/shared/styles/themes.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -26,7 +27,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     BoardingModel(
         imagePath: 'assets/images/img2blue.png',
         title: 'All way to you',
-        body: 'buy nay thing and every thing because delivery is not a problem anymore'),
+        body:
+            'buy nay thing and every thing because delivery is not a problem anymore'),
     BoardingModel(
         imagePath: 'assets/images/img3blue.png',
         title: 'Paying methods',
@@ -35,6 +37,14 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   bool _isLastPage = false;
 
   PageController _boardingController = PageController();
+  void saveBoarding() {
+    CashHelper.putData(key: 'onBoarding', value: true).then((value) {
+      replaceTo(
+        context,
+        LoginScreen(),
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,10 +54,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         elevation: 0,
         actions: [
           TextButton(
-              onPressed: () => replaceTo(
-                context,
-                 LoginScreen(),
-              ),
+              onPressed: () => saveBoarding(),
               child: Text(
                 'SKIP',
                 style: TextStyle(
@@ -100,10 +107,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 FloatingActionButton(
                   onPressed: () {
                     if (_isLastPage == true) {
-                      replaceTo(
-                        context,
-                         LoginScreen(),
-                      );
+                      saveBoarding();
                     } else {
                       _boardingController.nextPage(
                           duration: const Duration(milliseconds: 500),

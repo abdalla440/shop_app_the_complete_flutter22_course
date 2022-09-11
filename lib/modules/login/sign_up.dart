@@ -10,7 +10,7 @@ class SignUpScreen extends StatelessWidget {
   var passwordController = TextEditingController();
   var phoneNumberController = TextEditingController();
   bool isPass = true;
-  var screenColor = defaultColor[700];
+  var screenColor = defaultColor[900];
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;

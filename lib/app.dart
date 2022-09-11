@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/modules/on_boarding/on_boarding_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shop_app/layout/shop_layout/cubit/shop_cubit.dart';
 import 'package:shop_app/shared/styles/themes.dart';
 
 class App extends StatelessWidget {
+  final startWidget;
+  App({Key? key, required this.startWidget}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home:  OnBoardingScreen(),
-      theme: lightTheme,
-      debugShowCheckedModeBanner: false,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ShopCubit()..getHomeData(),
+        )
+      ],
+      child: MaterialApp(
+        home: startWidget,
+        theme: lightTheme,
+        debugShowCheckedModeBanner: false,
+      ),
     );
   }
 }

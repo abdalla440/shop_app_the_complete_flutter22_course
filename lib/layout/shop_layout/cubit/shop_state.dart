@@ -4,3 +4,11 @@ part of 'shop_cubit.dart';
 abstract class ShopState {}
 
 class ShopInitial extends ShopState {}
+
+class ChangeBottomNavBarState extends ShopState {}
+
+class ShopHomeLoadingState extends ShopState {}
+
+class ShopHomeSuccessState extends ShopState {}
+
+class ShopHomeErrorState extends ShopState {}
