@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/layout/shop_layout/cubit/shop_cubit.dart';
+import 'package:shop_app/shared/components/components.dart';
 import 'package:shop_app/shared/styles/colors.dart';
 
 class HomeLayout extends StatelessWidget {
@@ -18,7 +19,15 @@ class HomeLayout extends StatelessWidget {
               cubit.bottomNavBarItems;
           int currentIndex = cubit.currentIndex;
           return Scaffold(
-            appBar: AppBar(backgroundColor: defaultColor[900]),
+            appBar: AppBar(
+              backgroundColor: defaultColor[900],
+              title: Image(
+                image: AssetImage(
+                  'assets/images/hiconfull0.png',
+                ),
+                height: 20,
+              ),
+            ),
             body: cubit.screens[currentIndex],
             bottomNavigationBar: BottomNavigationBar(
               selectedItemColor: defaultColor[900],

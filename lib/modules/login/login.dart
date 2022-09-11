@@ -28,7 +28,7 @@ class LoginScreen extends StatelessWidget {
                     height: 20.0,
                   ),
                   Expanded(
-                    child: logoText(),
+                    child: bigLogo(),
                   ),
                   const SizedBox(
                     height: 50.0,

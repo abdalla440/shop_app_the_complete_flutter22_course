@@ -12,17 +12,17 @@ void replaceTo(context, widget) => Navigator.pushAndRemoveUntil(
       (route) => false,
     );
 
-Widget logoText() => Column(
+Widget bigLogo() => Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image(
+        const Image(
           width: 100,
           height: 100,
           image: AssetImage(
             'assets/images/hicon.png',
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 10.0,
         ),
         Text(
@@ -35,6 +35,31 @@ Widget logoText() => Column(
         )
       ],
     );
+Widget nanoLogo() => Row(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+    const Image(
+      width: 25,
+      height: 25,
+      image: AssetImage(
+        'assets/images/hicon.png',
+      ),
+    ),
+    const SizedBox(
+      width: 5.0,
+    ),
+    Text(
+      'Store',
+      style: GoogleFonts.varelaRound(
+        color: Colors.white,
+        fontSize: 32,
+        fontWeight: FontWeight.w500,
+
+
+      ),
+    )
+  ],
+);
 
 Widget defaultFormField({
   @required TextEditingController? controller,
