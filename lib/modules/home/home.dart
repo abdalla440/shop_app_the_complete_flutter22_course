@@ -3,6 +3,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/layout/shop_layout/cubit/shop_cubit.dart';
+import 'package:shop_app/models/cotegories_model.dart';
 import 'package:shop_app/models/shop_model.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -11,14 +12,18 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ShopCubit()..getHomeData(),
+      create: (context) => ShopCubit()
+        ..getHomeData()
+        ..getCategoriesData(),
       child: BlocConsumer<ShopCubit, ShopState>(
         listener: (context, state) {},
         builder: (context, state) {
           return ConditionalBuilder(
-            condition: ShopCubit.get(context).homeModel != null,
+            condition: ShopCubit.get(context).homeModel != null &&
+                ShopCubit.get(context).categoriesModel != null,
             builder: (context) {
-              return HomeBuilder(ShopCubit.get(context).homeModel!);
+              return HomeBuilder(ShopCubit.get(context).homeModel!,
+                  ShopCubit.get(context).categoriesModel!);
             },
             fallback: (context) =>
                 const Center(child: CircularProgressIndicator()),
@@ -28,11 +33,13 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget HomeBuilder(HomeModel model) => SingleChildScrollView(
+  Widget HomeBuilder(HomeModel model, CategoriesModel categoriesModel) =>
+      SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Container(
           color: Colors.grey[100],
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CarouselSlider(
                 items: model.data?.banners
@@ -60,24 +67,93 @@ class HomeScreen extends StatelessWidget {
                   viewportFraction: 1.0,
                 ),
               ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                child: Text(
+                  'Top Categories',
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  height: 150.0,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) =>
+                        CategoryItemBuilder(categoriesModel.data!.data[index]),
+                    separatorBuilder: (context, index) => const SizedBox(
+                      width: 0,
+                    ),
+                    itemCount: categoriesModel.data!.data.length,
+                  ),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
                   color: Colors.grey[100],
-                  child: GridView.count(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 5,
-                    mainAxisSpacing: 5,
-                    childAspectRatio: 1 / 1.62,
-                    children:
-                        List.generate(model.data!.products.length, (index) {
-                      print(model.data!.products.length);
-                      return ListItemBuilder(model.data!.products[index]);
-                    }),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      const Text(
+                        'Hot Deals',
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      GridView.count(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 5,
+                        mainAxisSpacing: 5,
+                        childAspectRatio: 1 / 1.62,
+                        children:
+                            List.generate(model.data!.products.length, (index) {
+                          print(model.data!.products.length);
+                          return ListItemBuilder(model.data!.products[index]);
+                        }),
+                      ),
+                    ],
                   ),
                 ),
+              ),
+            ],
+          ),
+        ),
+      );
+
+  Widget CategoryItemBuilder(
+    DataModel model,
+  ) =>
+      Card(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Image(
+                height: 100,
+                width: 100,
+                image: NetworkImage(
+                  '${model.image}',
+                ),
+              ),
+              Text(
+                '${model.name}',
               ),
             ],
           ),
@@ -156,7 +232,7 @@ class HomeScreen extends StatelessWidget {
                                   style: TextStyle(
                                     color: Colors.green[700],
                                     wordSpacing: 0,
-                                    fontSize: 13 ,
+                                    fontSize: 13,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
