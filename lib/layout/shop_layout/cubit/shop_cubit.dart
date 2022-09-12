@@ -20,18 +20,20 @@ class ShopCubit extends Cubit<ShopState> {
   int currentIndex = 0;
   List screens = [
     HomeScreen(),
-    CategoriesScreen(),
-    ProfileScreen(),
-    CartScreen(),
+    const CategoriesScreen(),
+    const ProfileScreen(),
+    const CartScreen(),
   ];
   List<BottomNavigationBarItem> bottomNavBarItems = [
     const BottomNavigationBarItem(
-      icon: Icon(Icons.home_outlined),
+      icon: Image(
+        image: AssetImage('assets/icons/home.png'),
+      ),
       label: 'home',
     ),
     const BottomNavigationBarItem(
-      icon: Icon(Icons.category_outlined),
-      label: 'categories',
+      icon: Icon(Icons.apps_outlined),
+      label: 'Products',
     ),
     const BottomNavigationBarItem(
       icon: Icon(Icons.person_outline_rounded),
@@ -50,10 +52,8 @@ class ShopCubit extends Cubit<ShopState> {
   HomeModel? homeModel;
   void getHomeData() {
     emit(ShopHomeLoadingState());
-    DioHelper.getData(
-      url: HOME,
-      token: CashHelper.getData(key: token)
-    ).then((value) {
+    DioHelper.getData(url: HOME, token: CashHelper.getData(key: token))
+        .then((value) {
       homeModel = HomeModel.fromJson(value.data);
       print(homeModel?.data!.products[0].description);
       emit(ShopHomeSuccessState());

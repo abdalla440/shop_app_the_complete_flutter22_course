@@ -18,14 +18,31 @@ class HomeLayout extends StatelessWidget {
           List<BottomNavigationBarItem> bottomNavBarItems =
               cubit.bottomNavBarItems;
           int currentIndex = cubit.currentIndex;
+          TextEditingController? searchController;
           return Scaffold(
             appBar: AppBar(
-              backgroundColor: defaultColor[900],
-              title: Image(
-                image: AssetImage(
-                  'assets/images/hiconfull0.png',
+              leading: Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: nanoLogo(),
+              ),
+              leadingWidth: 100,
+              title: SizedBox(
+                height: 35,
+                child: TextFormField(
+                  controller: searchController,
+                  onFieldSubmitted: (value) {},
+                  style: const TextStyle(
+                    fontSize: 15.0,
+                  ),
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    hintText: 'What are you looking for?',
+                    contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+                    prefixIcon: const Icon(Icons.search_rounded),
+                  ),
                 ),
-                height: 20,
               ),
             ),
             body: cubit.screens[currentIndex],

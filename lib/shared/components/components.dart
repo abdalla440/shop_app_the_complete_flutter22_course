@@ -35,38 +35,19 @@ Widget bigLogo() => Column(
         )
       ],
     );
-Widget nanoLogo() => Row(
-  mainAxisAlignment: MainAxisAlignment.center,
-  children: [
-    const Image(
-      width: 25,
-      height: 25,
+Widget nanoLogo() => const Image(
       image: AssetImage(
-        'assets/images/hicon.png',
+        'assets/images/hiconfullblack.png',
       ),
-    ),
-    const SizedBox(
-      width: 5.0,
-    ),
-    Text(
-      'Store',
-      style: GoogleFonts.varelaRound(
-        color: Colors.white,
-        fontSize: 32,
-        fontWeight: FontWeight.w500,
-
-
-      ),
-    )
-  ],
-);
+      height: 20,
+    );
 
 Widget defaultFormField({
   @required TextEditingController? controller,
   TextInputType? type,
   @required String? label,
   @required IconData? prefix,
-  @required String? Function(String?)? validator,
+  String? Function(String?)? validator,
   bool isPassword = false,
   bool isClickable = true,
   bool isReadOnly = false,
